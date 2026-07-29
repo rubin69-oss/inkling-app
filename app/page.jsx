@@ -867,7 +867,7 @@ export default function Home() {
     <div>
       <header className="site-nav">
         <div className="brand">
-          <Image src="/logo-icon.png" alt="" width={28} height={38} className="brand-mark" priority unoptimized />
+          <Image src="/logo-icon.png" alt="" width={34} height={34} className="brand-mark" priority unoptimized />
           <span className="brand-name">Inkling</span>
           <span className="brand-tag">· characters, reimagined</span>
         </div>

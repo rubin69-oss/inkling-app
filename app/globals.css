@@ -87,13 +87,13 @@ h1, h2, h3 {
 }
 .brand { display: flex; align-items: center; gap: 10px; }
 .brand-mark {
-  height: 38px; width: 28px;
+  height: 34px; width: 34px;
   flex-shrink: 0;
-  object-fit: contain;
+  border-radius: 22%;
 }
 .brand-name {
   font-family: 'Fraunces', serif; font-weight: 600; font-size: 20px;
-  letter-spacing: 0.01em; color: #ece6d6;
+  letter-spacing: 0.01em; color: #cda444;
 }
 .brand-tag {
   font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
