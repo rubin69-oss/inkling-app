@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { BookOpen, Search, Feather, Loader2, X, ImageOff, Download, Palette, Wand2, ArrowRight, Check, Menu, User, Mail, Lock } from "lucide-react";
 import { STYLE_OPTIONS, DEFAULT_STYLE } from "./lib/styles";
 import {
@@ -866,9 +867,7 @@ export default function Home() {
     <div>
       <header className="site-nav">
         <div className="brand">
-          <div className="brand-mark">
-            <Feather size={16} color="#241014" />
-          </div>
+          <Image src="/logo-icon.png" alt="" width={28} height={38} className="brand-mark" priority unoptimized />
           <span className="brand-name">Inkling</span>
           <span className="brand-tag">· characters, reimagined</span>
         </div>

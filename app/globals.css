@@ -87,10 +87,9 @@ h1, h2, h3 {
 }
 .brand { display: flex; align-items: center; gap: 10px; }
 .brand-mark {
-  width: 34px; height: 34px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #cda444, #7d1f30 70%, #1a0e12 100%);
-  display: flex; align-items: center; justify-content: center;
+  height: 38px; width: 28px;
   flex-shrink: 0;
+  object-fit: contain;
 }
 .brand-name {
   font-family: 'Fraunces', serif; font-weight: 600; font-size: 20px;
