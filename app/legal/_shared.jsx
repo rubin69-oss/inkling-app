@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-export const SUPPORT_EMAIL = "support@inkling.app"; // TODO: replace with your real support address
+export const SUPPORT_EMAIL = "inklingapp.contact@gmail.com";
 
 export function LegalShell({ title, updated, children }) {
   return (
