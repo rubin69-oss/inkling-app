@@ -7,7 +7,7 @@ const config = {
     // deployed the web app (see README step 2 — Vercel). The native
     // Android shell loads your live site, so your Anthropic/OpenAI API
     // keys stay safely on your server and are never bundled into the app.
-    url: "https://REPLACE-WITH-YOUR-DEPLOYED-URL.vercel.app",
+    url: "https://inkling-app-lyart.vercel.app",
     cleartext: false,
   },
   android: {
