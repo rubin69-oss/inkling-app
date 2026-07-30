@@ -44,7 +44,7 @@ export async function POST(request) {
         model: "gpt-image-1",
         prompt,
         size: imageSize,
-        quality: quality === "high" ? "high" : "medium",
+        quality: quality === "high" ? "high" : quality === "medium" ? "medium" : "low",
         n: 1,
       }),
     });

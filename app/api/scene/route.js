@@ -40,6 +40,7 @@ export async function POST(request) {
     form.append("image", new Blob([buffer], { type: "image/png" }), "reference.png");
     form.append("prompt", prompt);
     form.append("size", "1024x1024");
+    form.append("quality", "low");
     form.append("n", "1");
 
     const response = await fetch("https://api.openai.com/v1/images/edits", {
