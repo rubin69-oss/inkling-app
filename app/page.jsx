@@ -87,6 +87,16 @@ const CAST_REVIEWS = [
     book: "Dracula",
     quote: "Rendered in exactly the shadow I remember from that terrible night in Transylvania.",
   },
+  {
+    name: "Jay Gatsby",
+    book: "The Great Gatsby",
+    quote: "Old sport, this portrait catches the green light in my eye precisely. Daisy would know me across the bay.",
+  },
+  {
+    name: "Captain Ahab",
+    book: "Moby-Dick",
+    quote: "The eyes are right — that same fire chasing the white whale. Ishmael himself couldn't have set it down truer.",
+  },
 ];
 
 const HERO_CARDS = [
