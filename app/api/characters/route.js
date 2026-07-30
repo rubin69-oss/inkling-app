@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { createClient } from "../../lib/supabase/server";
 import { parseJsonLoose } from "../../lib/parseJsonLoose";
 
+export const maxDuration = 60;
+
 const SYSTEM_PROMPT = `You are a literary casting director and archivist. Given a book title, and optionally a character name, respond with ONLY raw JSON (no markdown fences, no commentary) in exactly this shape:
 {"book":"<normalized book title>","found":true|false,"characters":[{"name":"<character name>","blurb":"<one vivid sentence, max 20 words, no spoilers, original phrasing>","era":"<short setting tag, e.g. 'Regency England'>","appearance":"<2-3 sentence physical description a portrait artist could work from: build, hair, expression, clothing style, mood — no named real actors, no reference to any film/TV adaptation>","bio":"<2-3 sentence biography covering who they are, their role in the story, and their arc, no ending spoilers>","quotes":["<a short line actually spoken by or written about this character in the original public-domain text, quoted as accurately as you can recall, max ~25 words>"]}]}
 Rules:

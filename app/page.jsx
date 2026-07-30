@@ -1050,7 +1050,7 @@ export default function Home() {
                     </ul>
                   )}
                 </div>
-                <button className="go-btn" type="submit" disabled={status === "loading" || !book.trim()}>
+                <button className="go-btn" type="submit" disabled={status === "loading" || userLoading || !book.trim()}>
                   {status === "loading" ? <Loader2 className="spin" size={16} /> : <Search size={16} />}
                   Reveal characters
                 </button>
@@ -1087,7 +1087,7 @@ export default function Home() {
                     aria-label="Source title, optional"
                   />
                 </div>
-                <button className="go-btn" type="submit" disabled={status === "loading" || !excerpt.trim()}>
+                <button className="go-btn" type="submit" disabled={status === "loading" || userLoading || !excerpt.trim()}>
                   {status === "loading" ? <Loader2 className="spin" size={16} /> : <Search size={16} />}
                   Extract &amp; Reveal
                 </button>

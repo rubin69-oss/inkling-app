@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { createClient } from "../../lib/supabase/server";
 import { parseJsonLoose } from "../../lib/parseJsonLoose";
 
+export const maxDuration = 60;
+
 const SYSTEM_PROMPT = `You are a literary visual-extraction assistant. The user pastes a raw excerpt or quote from a book (public domain). Extract ONLY what the passage itself supports — do not invent plot details beyond it, and do not rely on outside knowledge of the book. Respond with ONLY raw JSON (no markdown fences, no commentary) in exactly this shape:
 {"found":true|false,"book":"<book/source title if given or clearly mentioned, else empty string>","character":{"name":"<character name from the passage, or a short label like 'The Narrator' if unnamed>","blurb":"<one vivid sentence, max 20 words, describing them, based only on this passage>","era":"<short setting tag if inferable from the passage, else empty string>","appearance":"<2-3 sentence physical description a portrait artist could work from, built ONLY from details in the passage — build, hair, expression, clothing, mood. If the passage lacks physical detail, infer the barest neutral detail consistent with tone, never invent specifics the text doesn't support>","bio":"<1-2 sentence summary of what this passage reveals about them>","quotes":["<the single most evocative line copied VERBATIM from the pasted passage, max ~25 words, no surrounding quotation marks added>"]}}
 Rules:

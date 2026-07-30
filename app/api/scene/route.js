@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { STYLE_PROMPTS, DEFAULT_STYLE } from "../../lib/styles";
 
+export const maxDuration = 60;
+
 export async function POST(request) {
   try {
     const body = await request.json();

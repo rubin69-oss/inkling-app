@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { STYLE_PROMPTS, DEFAULT_STYLE } from "../../lib/styles";
 
+export const maxDuration = 60;
+
 function buildPrompt({ name, book, era, appearance, style }) {
   const styleDescription = STYLE_PROMPTS[style] || STYLE_PROMPTS[DEFAULT_STYLE];
   return [
