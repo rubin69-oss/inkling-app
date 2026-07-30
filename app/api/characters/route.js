@@ -4,15 +4,14 @@ import { parseJsonLoose } from "../../lib/parseJsonLoose";
 
 export const maxDuration = 60;
 
-const SYSTEM_PROMPT = `You are a literary casting director and archivist. Given a book title, and optionally a character name, respond with ONLY raw JSON (no markdown fences, no commentary) in exactly this shape:
-{"book":"<normalized book title>","found":true|false,"characters":[{"name":"<character name>","blurb":"<one vivid sentence, max 20 words, no spoilers, original phrasing>","era":"<short setting tag, e.g. 'Regency England'>","appearance":"<2-3 sentence physical description a portrait artist could work from: build, hair, expression, clothing style, mood — no named real actors, no reference to any film/TV adaptation>","bio":"<2-3 sentence biography covering who they are, their role in the story, and their arc, no ending spoilers>","quotes":["<a short line actually spoken by or written about this character in the original public-domain text, quoted as accurately as you can recall, max ~25 words>"]}]}
+const SYSTEM_PROMPT = `You are a literary casting director. Given a book title, and optionally a character name, respond with ONLY raw JSON (no markdown fences, no commentary) in exactly this shape:
+{"book":"<normalized book title>","found":true|false,"characters":[{"name":"<character name>","blurb":"<one vivid sentence, max 20 words, no spoilers>","era":"<short setting tag>","appearance":"<1-2 concise sentences a portrait artist could work from: build, hair, expression, clothing — no real actors/adaptations>","bio":"<1-2 concise sentences: who they are, their role, no ending spoilers>","quotes":["<one short real line from the original public-domain text, max ~20 words>"]}]}
 Rules:
-- If a specific character name was given, return exactly 1 character (that one).
-- If no character was given, return exactly 3 major characters from the book.
-- "appearance" must describe an ORIGINAL interpretation of the character from the text itself, never based on a movie, illustration, or real actor.
-- "quotes" must contain 1-2 real lines from the original book's text (it is public domain), remembered as faithfully as possible. If you are not confident of an exact quote, include only the ones you are confident about rather than inventing one. Do NOT wrap the quote text itself in quotation marks — the display layer adds those.
+- If a character name was given, return exactly 1 character (that one). Else return exactly 3 major characters from the book.
+- "appearance" is an ORIGINAL interpretation from the text itself, never based on a movie, illustration, or real actor.
+- "quotes" must be a real line remembered as faithfully as possible; include only if confident, do not invent one. Do NOT wrap the quote text itself in quotation marks — the display layer adds those.
 - If the title is not recognizable as a real or well-known work, set "found" to false and "characters" to [].
-- Never include text outside the JSON object.`;
+- Be concise. Never include text outside the JSON object.`;
 
 export async function POST(request) {
   const supabase = await createClient();
@@ -69,8 +68,8 @@ export async function POST(request) {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-6",
-        max_tokens: 1600,
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 900,
         system: SYSTEM_PROMPT,
         messages: [{ role: "user", content: userText }],
       }),
