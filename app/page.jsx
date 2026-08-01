@@ -2,8 +2,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { BookOpen, Search, Feather, Loader2, X, ImageOff, Download, Palette, Wand2, ArrowRight, Check, Menu, User, Mail, Lock } from "lucide-react";
+import { BookOpen, Search, Feather, Loader2, X, ImageOff, Download, Palette, Wand2, ArrowRight, Check, Menu, User, Mail, Lock, Share2, WifiOff } from "lucide-react";
 import { STYLE_OPTIONS, DEFAULT_STYLE } from "./lib/styles";
+import { initNativeChrome, cacheLastReveal, getCachedReveal, shareImage, notifyPortraitReady } from "./lib/native";
 import {
   renderPoster,
   renderWallpaper,
@@ -159,6 +160,7 @@ function CharacterCard({ c, book, tilt, defaultStyle, onDismiss }) {
   const [exporting, setExporting] = useState(false);
   const [scenes, setScenes] = useState([]); // { sceneText, status, image }
   const [sceneText, setSceneText] = useState("");
+  const [sharing, setSharing] = useState(false);
 
   const fetchPortrait = (useStyle) => {
     setImgStatus("loading");
@@ -179,6 +181,7 @@ function CharacterCard({ c, book, tilt, defaultStyle, onDismiss }) {
         if (data.image) {
           setImage(data.image);
           setImgStatus("done");
+          notifyPortraitReady(c.name);
         } else {
           setImgStatus("error");
         }
@@ -265,6 +268,16 @@ function CharacterCard({ c, book, tilt, defaultStyle, onDismiss }) {
       }
     } finally {
       setExporting(false);
+    }
+  };
+
+  const doShare = async () => {
+    if (!image || imgStatus !== "done" || sharing) return;
+    setSharing(true);
+    try {
+      await shareImage(image, `${slug}.png`, `${c.name} — ${book}`);
+    } finally {
+      setSharing(false);
     }
   };
 
@@ -402,6 +415,10 @@ function CharacterCard({ c, book, tilt, defaultStyle, onDismiss }) {
             <button className="export-btn" onClick={doExport} disabled={exporting}>
               {exporting ? <Loader2 className="spin" size={12} /> : <Download size={12} />}
               Download
+            </button>
+            <button className="export-btn share-btn" onClick={doShare} disabled={sharing} title={`Share ${c.name}`}>
+              {sharing ? <Loader2 className="spin" size={12} /> : <Share2 size={12} />}
+              Share
             </button>
           </div>
         </>
@@ -687,6 +704,12 @@ export default function Home() {
   const reviewsRef = useRef(null);
   const pricingRef = useRef(null);
 
+  const [offline, setOffline] = useState(false);
+
+  useEffect(() => {
+    initNativeChrome();
+  }, []);
+
   useEffect(() => {
     fetch("/api/auth/me")
       .then((r) => r.json())
@@ -783,10 +806,19 @@ export default function Home() {
       } else {
         setResult(data);
         setStatus("done");
+        setOffline(false);
+        cacheLastReveal({ book: bookTitle, characters: data.characters });
         refreshCredits();
       }
     } catch (e) {
-      setStatus("error");
+      const cached = await getCachedReveal();
+      if (cached) {
+        setResult(cached);
+        setStatus("done");
+        setOffline(true);
+      } else {
+        setStatus("error");
+      }
     }
     scrollToResults();
   };
@@ -821,12 +853,22 @@ export default function Home() {
       } else if (!data.found || !data.character) {
         setStatus("empty");
       } else {
-        setResult({ book: data.book || excerptSource || "Untitled passage", characters: [data.character] });
+        const passageResult = { book: data.book || excerptSource || "Untitled passage", characters: [data.character] };
+        setResult(passageResult);
         setStatus("done");
+        setOffline(false);
+        cacheLastReveal(passageResult);
         refreshCredits();
       }
     } catch (e) {
-      setStatus("error");
+      const cached = await getCachedReveal();
+      if (cached) {
+        setResult(cached);
+        setStatus("done");
+        setOffline(true);
+      } else {
+        setStatus("error");
+      }
     }
     scrollToResults();
   };
@@ -1142,6 +1184,12 @@ export default function Home() {
 
         {status === "done" && result && (
           <div className="section" style={{ paddingTop: 10 }}>
+            {offline && (
+              <div className="offline-banner">
+                <WifiOff size={14} />
+                You're offline — showing your last revealed cast.
+              </div>
+            )}
             <div className="results-title">{result.book}</div>
             <div className="results-sub">Cast revealed</div>
             <div className="card-grid">

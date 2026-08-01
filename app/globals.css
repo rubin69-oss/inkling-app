@@ -359,6 +359,17 @@ h1, h2, h3 {
 }
 .export-btn:hover:not(:disabled) { background: rgba(125,31,48,0.16); border-color: rgba(125,31,48,0.4); }
 .export-btn:disabled { opacity: 0.55; cursor: default; }
+.share-btn {
+  color: #1a5c3a; background: rgba(26,92,58,0.08); border-color: rgba(26,92,58,0.25);
+}
+.share-btn:hover:not(:disabled) { background: rgba(26,92,58,0.16); border-color: rgba(26,92,58,0.4); }
+
+.offline-banner {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+  color: #cda444; background: rgba(205,164,68,0.1); border: 1px solid rgba(205,164,68,0.3);
+  border-radius: 8px; padding: 8px 12px; margin-bottom: 14px; text-align: center;
+}
 
 .scene-section { margin-top: 16px; padding-top: 14px; border-top: 1px dashed rgba(36,30,23,0.15); }
 .scene-label {

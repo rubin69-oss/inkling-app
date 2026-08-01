@@ -13,6 +13,20 @@ const config = {
   android: {
     allowMixedContent: false,
   },
+  plugins: {
+    SplashScreen: {
+      launchShowDuration: 1200,
+      launchAutoHide: false,
+      backgroundColor: "#0c0d1c",
+      androidSplashResourceName: "splash",
+      androidScaleType: "CENTER_CROP",
+      showSpinner: false,
+    },
+    StatusBar: {
+      style: "DARK",
+      backgroundColor: "#0c0d1c",
+    },
+  },
 };
 
 module.exports = config;
